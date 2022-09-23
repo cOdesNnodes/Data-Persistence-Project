@@ -18,7 +18,27 @@ public class MainManager : MonoBehaviour
     
     private bool m_GameOver = false;
 
-    
+    //public static MainManager Instance;
+
+   // private void Awake()
+   // {
+   //     // start of new code
+    //    if (Instance != null)
+   //     {
+    //        Destroy(gameObject);
+   //         return;
+    //    }
+        // end of new code
+
+    //    Instance = this;
+    //    DontDestroyOnLoad(gameObject);
+   // }
+
+    public void StartNew()
+    {
+        SceneManager.LoadScene(0);
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -37,6 +57,8 @@ public class MainManager : MonoBehaviour
             }
         }
     }
+
+    
 
     private void Update()
     {
@@ -57,11 +79,11 @@ public class MainManager : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                StartNew();
             }
         }
     }
-
+        
     void AddPoint(int point)
     {
         m_Points += point;
