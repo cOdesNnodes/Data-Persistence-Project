@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
+//public TMP_InputField Playername;
+
+//string currentPlayername = Playername.text;
 
 public class ScoreKeeper : MonoBehaviour
 {
