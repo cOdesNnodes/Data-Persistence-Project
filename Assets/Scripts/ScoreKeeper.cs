@@ -10,8 +10,11 @@ using TMPro;
 
 public class ScoreKeeper : MonoBehaviour
 {
-
     public static ScoreKeeper Instance;
+
+    public string currentPlayer;
+
+    public bool playerIsNew;
 
     private void Awake()
     {
@@ -34,11 +37,27 @@ public class ScoreKeeper : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+  
     }
 
     public void StartNew()
     {
         SceneManager.LoadScene(1);
+    }
+
+    public void WhosPlaying(string UsInput)
+    {
+        currentPlayer = UsInput;
+
+        Debug.Log(currentPlayer + " is loaded in ScoreKeeper");
+
+        FindObjectOfType<NameImput>().UpdateUsName(currentPlayer);
+    }
+
+    public void UpdateMainManager()
+    {
+        Debug.Log(currentPlayer + " Sent to MainManager");
+
+        FindObjectOfType<MainManager>().UpdateCurrentScoreText(currentPlayer);
     }
 }

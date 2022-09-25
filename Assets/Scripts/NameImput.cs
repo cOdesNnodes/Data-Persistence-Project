@@ -7,12 +7,11 @@ using TMPro;
 
 public class NameImput : MonoBehaviour
 {
-    //public GameObject TMP_InputField_Username;
-   // public string currentPlayer;
+    [SerializeField] public TMP_InputField inputField;
+    [SerializeField] public string uname;
+    [SerializeField] public string ScoreTextName;
 
-    [SerializeField]
-    public TMP_InputField inputField;
-    public string uname;
+    public TMP_Text userInput;
 
 
     // Start is called before the first frame update
@@ -24,20 +23,21 @@ public class NameImput : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //WhosPlaying();
+        
     }
-
-    //public void WhosPlaying()
-    //{
-     //   string currentPlayer = TMP_InputField_Username.GetComponent<TMP_InputField>().text;
-     //   Debug.Log("Username: " + currentPlayer);
-   // }
 
     public void InputName()
     {
         string uname = inputField.text;
-        Debug.Log(uname);
-
+        Debug.Log(uname + " loaded into NameImput script");
+       
+        FindObjectOfType<ScoreKeeper>().WhosPlaying(uname);
         //_inputField.text = "";
+    }
+
+    public void UpdateUsName(string ScoreTextName)
+    {
+        userInput.text = ScoreTextName.ToString();
+        Debug.Log(ScoreTextName + " Has Been Passed from ScoreKeeper");
     }
 }

@@ -20,21 +20,9 @@ public class MainManager : MonoBehaviour
     
     private bool m_GameOver = false;
 
-    //public static MainManager Instance;
+    public TMP_Text currentScoreText;
+    public string currentPlayer;
 
-   // private void Awake()
-   // {
-   //     // start of new code
-    //    if (Instance != null)
-   //     {
-    //        Destroy(gameObject);
-   //         return;
-    //    }
-        // end of new code
-
-    //    Instance = this;
-    //    DontDestroyOnLoad(gameObject);
-   // }
 
     public void StartNew()
     {
@@ -44,6 +32,8 @@ public class MainManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        CheckCurrentPlayer();
+
         const float step = 0.6f;
         int perLine = Mathf.FloorToInt(4.0f / step);
         
@@ -89,12 +79,28 @@ public class MainManager : MonoBehaviour
     void AddPoint(int point)
     {
         m_Points += point;
-        ScoreText.text = $"Score : {m_Points}";
+        //ScoreText.text = $"Score : {m_Points}";
+
+        currentScoreText.text = currentPlayer + $"'s Score : {m_Points}"; //currentPlayer.ToString();
+
     }
 
     public void GameOver()
     {
         m_GameOver = true;
         GameOverGroup.SetActive(true);
+    }
+
+    public void UpdateCurrentScoreText(string CurrentFromScorekeeper)
+    {
+        currentPlayer = CurrentFromScorekeeper;
+
+        
+        Debug.Log(CurrentFromScorekeeper + " Has Been Passed from ScoreKeeper to main scene");
+    }
+
+    public void CheckCurrentPlayer()
+    {
+        FindObjectOfType<ScoreKeeper>().UpdateMainManager();
     }
 }
