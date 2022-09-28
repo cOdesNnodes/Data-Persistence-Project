@@ -22,17 +22,23 @@ public class MainManager : MonoBehaviour
 
     public TMP_Text currentScoreText;
     public string currentPlayer;
+    public int lastScore;
 
+    public TMP_Text bestScoreText;
+    public int highScore;
+    public string highName;
 
-    public void StartNew()
+    void Awake()
+
     {
-        SceneManager.LoadScene(1);
-    }
+        CheckBestScore();
+        CheckCurrentPlayer();
+    }    
 
     // Start is called before the first frame update
     void Start()
     {
-        CheckCurrentPlayer();
+        
 
         const float step = 0.6f;
         int perLine = Mathf.FloorToInt(4.0f / step);
@@ -79,7 +85,6 @@ public class MainManager : MonoBehaviour
     void AddPoint(int point)
     {
         m_Points += point;
-        //ScoreText.text = $"Score : {m_Points}";
 
         currentScoreText.text = currentPlayer + $"'s Score : {m_Points}"; //currentPlayer.ToString();
 
@@ -89,6 +94,16 @@ public class MainManager : MonoBehaviour
     {
         m_GameOver = true;
         GameOverGroup.SetActive(true);
+        if(m_Points > highScore)
+        {
+            highName = currentPlayer; // needs work, highname always currentplayer
+            highScore = m_Points;
+            FindObjectOfType<ScoreKeeper>().UpdateHighName(highName);
+            FindObjectOfType<ScoreKeeper>().UpdateHighScore(highScore);
+        }
+        
+        bestScoreText.text = highName + $"'s Best Score : {highScore}";
+        
     }
 
     public void UpdateCurrentScoreText(string CurrentFromScorekeeper)
@@ -102,5 +117,33 @@ public class MainManager : MonoBehaviour
     public void CheckCurrentPlayer()
     {
         FindObjectOfType<ScoreKeeper>().UpdateMainManager();
+    }
+
+    public void CheckBestScore()
+    {
+        FindObjectOfType<ScoreKeeper>().CheckHighScore(highScore);
+
+        bestScoreText.text = highName + $"'s Best Score : {highScore}";
+
+    }
+
+    public void  UpdateMMHScore(int cScore)
+    {
+        highScore = cScore;
+    }
+
+    public void UpdateMMHName(string cName)
+    {
+        highName = cName;
+    }
+
+    public void StartNew()
+    {
+        SceneManager.LoadScene(1);
+    }
+
+    public void SkUpdateHName()
+    {
+        FindObjectOfType<ScoreKeeper>().UpdateHighName(highName);
     }
 }

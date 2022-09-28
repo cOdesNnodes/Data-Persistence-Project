@@ -16,6 +16,9 @@ public class ScoreKeeper : MonoBehaviour
 
     public bool playerIsNew;
 
+    public int HighScore;
+    public string HighName;
+
     private void Awake()
     {
         if (Instance != null)
@@ -59,5 +62,48 @@ public class ScoreKeeper : MonoBehaviour
         Debug.Log(currentPlayer + " Sent to MainManager");
 
         FindObjectOfType<MainManager>().UpdateCurrentScoreText(currentPlayer);
+    }
+
+    public void UpdateHighScore(int HScore)
+    {
+        HighScore = HScore;
+    }
+
+    public void UpdateHighName(string HName)
+    {
+        HighName = HName;
+    }
+
+    public void CheckHighScore(int cScore)
+    {
+        if(HighScore < cScore)
+        {
+            HighScore = cScore;
+            FindObjectOfType<MainManager>().UpdateMMHScore(HighScore);
+            //FindObjectOfType<MainManager>().SkUpdateHName();
+        }
+
+        if (HighScore > cScore)
+        {
+            //HighScore = cScore;
+            FindObjectOfType<MainManager>().UpdateMMHScore(HighScore);
+            FindObjectOfType<MainManager>().UpdateMMHName(HighName);
+        }
+    }
+
+    public void CheckHighName(string HName)
+    {
+        HighName = HName;
+        FindObjectOfType<MainManager>().UpdateMMHName(HighName);
+    }
+
+    public void UpNIHighScore()
+    {
+        FindObjectOfType<NameImput>().RecUpdateHighScore(HighScore);
+    }
+
+    public void UpNIHighName()
+    {
+        FindObjectOfType<NameImput>().RecUpdateHighName(HighName);
     }
 }
